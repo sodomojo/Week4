@@ -56,9 +56,11 @@ def game():
         return guesses, battleships
 game()
 
+# if the user has 5 wrong guesses throw the game over screen
 if guesses == 5:
     print("You lose!  Victory is mine!")
 
+# if the number of coordinates added to the battleships list matches the number of location entries, print statement
 if len(list(battleships)) == len(list(location)):
     print("You sunk all the battleships!  Well done!")
     input("Press any key to quit")
