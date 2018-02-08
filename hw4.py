@@ -11,8 +11,8 @@ If the user finds them all they'll win the game.
 location = ["C5", "D4", "B7", "A5", "C8", "C7", "D8", "A1", "A7"]
 
 # ship names
-ships = ["Battleship Charlie", "Battleship Dee", "Battleship Frank", "Battleship Dennis", "Battleship Cricket", "Battleship Mac",
-         "Battleship Artemis", "Battleship Gail", "Battleship McPoyle"]
+ships = ["Battleship CHARLIE", "Battleship DEE", "Battleship FRANK", "Battleship DENNIS", "Battleship CRICKET", "Battleship MAC",
+         "Battleship ARTEMIS", "Battleship GAIL", "Battleship MCPOYLE"]
 
 game_pieces = dict(zip(location, ships))
 
@@ -20,43 +20,45 @@ game_pieces = dict(zip(location, ships))
 def intro():
     print ("Let's play Battleship! \n\n"
     "Scattered across the board are various single-coordinate enemy Battleships that you need to seek and destroy.\n"
-    "Find the battleships by inputting coordinates using a combination of A through D across and 1 through 8 vertically (ex: A5 or D3).\n"
+    "Find the battleships by inputting a single missile coordinate using a combination of A through D across and 1 through 8 vertically (ex: A5 or D3).\n"
     "Choose your coordinates wisely -- you only have 5 guesses to take out the enemy.\n\n"
     "Good luck!\n")
-    # global variable that can be consumed by set
-
 intro()
+
 
 # global values
 global coordinate
 global coordinate_value
 global guesses
 
-battleships = {}
+# create empty list to store all the correct coordinate guesses
+battleships = []
 
 def game():
     for x in game_pieces:
+        # ask the user for a coordinate input
         coordinate = input("Enter a coordinate to sink a battleship!: ")
         coordinate_value = coordinate.upper()
         guesses = 0
         if coordinate_value in game_pieces.keys():
+            # print the coordinate and the ship name.
+            # add the coordinate to the battleship list
             print("Bullseye! You chose {} and you sank the {}  ".format(coordinate_value, game_pieces[coordinate_value]))
-            battleships.append(game_pieces.values())
+            battleships.append(coordinate_value)
             game()
         elif coordinate_value not in game_pieces.keys():
+            # show if their coordinate misses
+            print("Sorry, there is no Battleship at coordinate {}.  Please try again!".format(coordinate_value))
             guesses += 1
-            print("Sorry, you missed.  Try again")
             game()
         else:
             break
-    return guesses, coordinate_value, coordinate, battleships
+        return guesses, battleships
 game()
 
 if guesses == 5:
     print("You lose!  Victory is mine!")
 
-if len(list(battleships())) == 9:
+if len(list(battleships)) == len(list(location)):
     print("You sunk all the battleships!  Well done!")
     input("Press any key to quit")
-
-
